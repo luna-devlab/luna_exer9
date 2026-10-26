@@ -1,122 +1,89 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
+import Header from './components/Header'
+import ProductList from './components/ProductList'
+import Cart from './components/Cart'
 
+// MAIN APP COMPONENT
+// puts the header, the product list, and the cart together to make the homepage
+// the cart state lives here so both ProductList and Cart can use it
 function App() {
-  const [count, setCount] = useState(0)
+    // navigation buttons
+    const menus = [
+        { name: "Appliances", url: "#", id: 1 },
+        { name: "Groceries", url: "#", id: 2 },
+        { name: "Gadgets", url: "#", id: 3 },
+        { name: "Clothing", url: "#", id: 4 },
+    ]
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    // INITIAL STATE OF THE MARKET
+    // the 4 items sold in the store, images are inside the public/images folder
+    // no setter since the items in the market don't change
+    const [products] = useState([
+        { name: "Hanabishi Rice Cooker HHRC14FSHA 1.4L 7 cups", price: 1300, image: "images/rice-cooker.webp", id: 1 },
+        { name: "Asahi PF 840 Stand Fan 18 inches", price: 2690, image: "images/electric-fan.webp", id: 2 },
+        { name: "Fujidenzo 3.5 cu. ft. HD Inverter Two-Door Ref IRD-35G (Dark Titanium)", price: 9798, image: "images/refrigerator.webp", id: 3 },
+        { name: "American Home AMW-ST1920W 20Liters Microwave Gray Interior", price: 3230, image: "images/microwave.webp", id: 4 },
+    ])
+
+    // the cart starts empty, cart is the current list and setCart updates it
+    const [cart, setCart] = useState([])
+
+    // ADDING AN ITEM TO THE CART
+    // if the item is already in the cart, its qty goes up by 1
+    // if not, it's added as a new item with qty 1
+    function addToCart(product) {
+        setCart((prev) => {
+            const newCart = []
+            let found = false
+
+            for (let a = 0; a < prev.length; a++) {
+                if (prev[a].id === product.id) {
+                    // same item, copy it but add 1 to the qty
+                    newCart.push({ ...prev[a], qty: prev[a].qty + 1 })
+                    found = true
+                } else {
+                    newCart.push(prev[a])
+                }
+            }
+
+            // wala pa sa cart, so add it at the end with qty 1
+            if (found === false) {
+                newCart.push({ ...product, qty: 1 })
+            }
+
+            return newCart
+        })
+    }
+
+    // DELETING AN ITEM FROM THE CART
+    // keeps every item except the one whose delete button was clicked
+    function deleteFromCart(id) {
+        setCart((prev) => {
+            const newCart = []
+
+            for (let a = 0; a < prev.length; a++) {
+                if (prev[a].id === id) {
+                    // this is the deleted item, skip lang
+                } else {
+                    newCart.push(prev[a])
+                }
+            }
+
+            return newCart
+        })
+    }
+
+    return (
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+            <Header title={"Lazado"} menus={menus} />
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+            <div className="body">
+                <ProductList products={products} addToCart={addToCart} />
+                <Cart cart={cart} deleteFromCart={deleteFromCart} />
+            </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    )
 }
 
 export default App
