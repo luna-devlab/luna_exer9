@@ -1,16 +1,10 @@
-# React + Vite
+# Exercise 09: React JS Part 2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Full Name:** Mira Aliyah Luna
 
-Currently, two official plugins are available:
+**Section:** D-2L
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Code Description:**
+A homepage for Lazado, an e-commerce store, made with React. The header shows the store name and a navigation panel, where each button is made with the reusable `NavButton` component. The body shows the 4 items in the market on the left and the shopping cart on the right. Clicking "Add to cart" adds the item to the cart using React state (`useState`), so the cart list on the page updates right away. If the item is already in the cart, its quantity goes up by 1 instead. The cart shows the total number of items, and each item has an X button that deletes it from the cart. The cart has its own components, `Cart` and `CartItem`.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**GitHub Pages:** https://luna-devlab.github.io/luna_exer9/
